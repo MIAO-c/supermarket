@@ -1,5 +1,5 @@
 <template>
-  <div id="tent">
+  <div class="tent" @click="tentClick">
     <div v-if="!actived">
       <slot name="tent-icon"></slot>
     </div>
@@ -13,11 +13,26 @@
 </template>
 
 <script>
+// import { log } from 'util'
 export default {
   name: 'tent',
+  props:{
+    path:String
+  },
   data(){
     return{
-      actived: true
+     
+    }
+  },
+  computed:{
+    actived(){
+      return this.$route.path.indexOf(this.path) !== -1
+    }
+  },
+  methods:{
+    tentClick(){
+      this.$router.replace(this.path)
+      
     }
   }
 }

@@ -1,22 +1,23 @@
 <template>
   <div id="app">
-    <div id="nav">
+    <!-- <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
-    <router-view/>
-    <tabbar></tabbar>
+     -->
+     <router-view/>
+    <tabbarMain></tabbarMain>
   </div>
 </template>
 
 <script>
 
-import tabbar from "@/components/common/tabbar/Tabbar.vue"
+import tabbarMain from "@/components/current/tabbar/TabbarMain"
 
 export default {
   name: 'app',
   components: {
-    tabbar
+    tabbarMain
   }
 }
 </script>
