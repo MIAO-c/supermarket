@@ -12,6 +12,7 @@
 
 <script>
 
+// import tabbar from "@/components/common/tabbar/Tabbar"
 import tabbarMain from "@/components/current/tabbar/TabbarMain"
 
 export default {

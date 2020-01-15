@@ -1,5 +1,5 @@
 <template>
-  <div class="tent" @click="tentClick">
+  <div class="tend" @click="tentClick">
     <div v-if="!actived">
       <slot name="tent-icon"></slot>
     </div>
@@ -15,41 +15,38 @@
 <script>
 // import { log } from 'util'
 export default {
-  name: 'tent',
-  props:{
-    path:String
+  name: "tend",
+  props: {
+    path: String
   },
-  data(){
-    return{
-     
+  data() {
+    return {};
+  },
+  computed: {
+    actived() {
+      return this.$route.path.indexOf(this.path) !== -1;
     }
   },
-  computed:{
-    actived(){
-      return this.$route.path.indexOf(this.path) !== -1
-    }
-  },
-  methods:{
-    tentClick(){
-      this.$router.replace(this.path)
-      
+  methods: {
+    tentClick() {
+      this.$router.replace(this.path);
     }
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-img{
+img {
   width: 24px;
   height: 24px;
   /* vertical-align: middle; */
 }
-.text{
+.text {
   /* color: #555; */
   font-size: 12px;
 }
-.active{
+.active {
   color: rgb(252, 77, 115);
 }
 </style>

@@ -1,15 +1,16 @@
 <template>
-  
-    <div class="tab"></div>
-  
+  <div class="tab">
+    <slot></slot>
+  </div>
 </template>
 
 <script>
+// import tend from "@/components/common/tabbar/TabbarContent"
 
 export default {
   name: "tabbar",
   components: {
-    // tent
+    // tend
   }
 };
 </script>
