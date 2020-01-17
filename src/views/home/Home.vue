@@ -10,58 +10,11 @@
 
     <homefeature></homefeature>
 
-    <tabcontrol :titles="['流行', '新款', '精选']" class="tab-style"></tabcontrol>
+    <tabcontrol :titles="['流行', '新款', '精选']" @tabClick="tabClick" class="tab-style"></tabcontrol>
 
-    <goodslist :goods="goods['pop'].list"></goodslist>
+    <goodslist :goods="goods[nowGood].list"></goodslist>
 
-    <ul>
-      <li>1</li>
-      <li>2</li>
-      <li>3</li>
-      <li>4</li>
-      <li>5</li>
-      <li>6</li>
-      <li>7</li>
-      <li>8</li>
-      <li>9</li>
-      <li>10</li>
-    </ul>
-    <ul>
-      <li>1</li>
-      <li>2</li>
-      <li>3</li>
-      <li>4</li>
-      <li>5</li>
-      <li>6</li>
-      <li>7</li>
-      <li>8</li>
-      <li>9</li>
-      <li>10</li>
-    </ul>
-    <ul>
-      <li>1</li>
-      <li>2</li>
-      <li>3</li>
-      <li>4</li>
-      <li>5</li>
-      <li>6</li>
-      <li>7</li>
-      <li>8</li>
-      <li>9</li>
-      <li>10</li>
-    </ul>
-    <ul>
-      <li>1</li>
-      <li>2</li>
-      <li>3</li>
-      <li>4</li>
-      <li>5</li>
-      <li>6</li>
-      <li>7</li>
-      <li>8</li>
-      <li>9</li>
-      <li>10</li>
-    </ul>
+    
   </div>
 </template>
 
@@ -98,14 +51,35 @@ export default {
         pop: { page: 1, list: [] },
         new: { page: 1, list: [] },
         sell: { page: 1, list: [] }
-      }
+      },
+      nowGood:"pop"
     };
   },
   created() {
     this.getHomeMultidata();
+
     this.getHomeTabdata("pop");
+    this.getHomeTabdata("new");
+    this.getHomeTabdata("sell");
   },
   methods: {
+    //事件监听
+    tabClick(index) {
+      switch(index){
+        case 0:
+          this.nowGood = "pop"
+          break
+        case 1:
+          this.nowGood = "new"
+          break
+        case 2:
+          this.nowGood = "sell"
+          break
+      }
+      console.log(index)
+    },
+
+    //网络请求
     getHomeMultidata() {
       getHomeMultidata().then(res => {
         this.banners = res.data.banner.list;
@@ -114,10 +88,10 @@ export default {
       });
     },
     getHomeTabdata(type) {
-      const page = this.goods[type].page++;
+      const page = this.goods[type].page + 1;
       getHomeTabdata(type, page).then(res => {
         this.goods[type].list.push(...res.data.list);
-        // console.log(res)
+        // console.log(res.data.list)
       });
     }
   }
