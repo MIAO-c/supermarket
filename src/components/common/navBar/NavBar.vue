@@ -20,20 +20,24 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.NavBar{
-    display: flex;
-    height: 44px;  
-    line-height: 44px;
-    box-shadow: 0 1px 2px rgb(236, 236, 236);
-    /* background: #ff5777;
+.NavBar {
+  width: 100%;
+  display: flex;
+  height: 44px;
+  line-height: 44px;
+  /* box-shadow: 0 1px 2px rgb(236, 236, 236); */
+  /* background: #ff5777;
     color: aliceblue; */
+
+  /* margin-bottom: 44px; */
 }
-.left,.right{
-    width: 60px;
-    /* background: #f5c5ce; */
+.left,
+.right {
+  width: 60px;
+  /* background: #f5c5ce; */
 }
-.center{
-    flex: 1;
-    text-align: center;
+.center {
+  flex: 1;
+  text-align: center;
 }
 </style>
