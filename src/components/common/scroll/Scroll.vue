@@ -1,26 +1,31 @@
 <template>
   <div ref="wrapper">
-      <div>
-          <slot></slot>
-      </div>
+    <div>
+      <slot></slot>
+    </div>
   </div>
 </template>
 
 <script>
-
-import BScroll from 'better-scroll'
+import BScroll from "better-scroll";
 
 export default {
   name: "Scroll",
-  data(){
-      return{
-          scroll : null
-      }
+  data() {
+    return {
+      scroll: null
+    };
   },
-  mounted(){
-      const scroll = new BScroll(this.$refs.wrapper,{
-          click:true
-      })
+  mounted() {
+    this.scroll = new BScroll(this.$refs.wrapper, {
+      click: true
+    });
+    this.scroll.scrollTo(0, 0);
+  },
+  methods: {
+    scrollTo(x, y, time = 300) {
+      this.scroll.scrollTo(x, y,time);
+    }
   }
 };
 </script>

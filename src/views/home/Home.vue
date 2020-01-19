@@ -4,7 +4,7 @@
       <div slot="center">购物街</div>
     </navbar>
 
-    <scroll class="content">
+    <scroll class="content" ref="backcontent">
       <homeswiper :banners="banners"></homeswiper>
 
       <homebanner :recommends="recommends"></homebanner>
@@ -15,6 +15,8 @@
 
       <goodslist :goods="goods[nowGood].list"></goodslist>
     </scroll>
+
+    <backtop @click.native="backClick"></backtop>
   </div>
 </template>
 
@@ -25,6 +27,7 @@ import navbar from "@/components/common/navBar/NavBar";
 import tabcontrol from "@/components/current/tabControl/TabControl";
 import goodslist from "@/components/current/goods/GoodList";
 import scroll from "@/components/common/scroll/Scroll";
+import backtop from "@/components/common/backTop/BackTop";
 
 import { getHomeMultidata, getHomeTabdata } from "@/network/home";
 
@@ -40,6 +43,7 @@ export default {
     tabcontrol,
     goodslist,
     scroll,
+    backtop,
 
     homeswiper,
     homebanner,
@@ -79,6 +83,9 @@ export default {
           break;
       }
       // console.log(index)
+    },
+    backClick(){
+      this.$refs.backcontent.scrollTo(0, 0, 500)
     },
 
     //网络请求
