@@ -4,17 +4,17 @@
       <div slot="center">购物街</div>
     </navbar>
 
-    <homeswiper :banners="banners"></homeswiper>
+    <scroll class="content">
+      <homeswiper :banners="banners"></homeswiper>
 
-    <homebanner :recommends="recommends"></homebanner>
+      <homebanner :recommends="recommends"></homebanner>
 
-    <homefeature></homefeature>
+      <homefeature></homefeature>
 
-    <tabcontrol :titles="['流行', '新款', '精选']" @tabClick="tabClick" class="tab-style"></tabcontrol>
+      <tabcontrol :titles="['流行', '新款', '精选']" @tabClick="tabClick" class="tab-style"></tabcontrol>
 
-    <goodslist :goods="goods[nowGood].list"></goodslist>
-
-    
+      <goodslist :goods="goods[nowGood].list"></goodslist>
+    </scroll>
   </div>
 </template>
 
@@ -24,6 +24,7 @@
 import navbar from "@/components/common/navBar/NavBar";
 import tabcontrol from "@/components/current/tabControl/TabControl";
 import goodslist from "@/components/current/goods/GoodList";
+import scroll from "@/components/common/scroll/Scroll";
 
 import { getHomeMultidata, getHomeTabdata } from "@/network/home";
 
@@ -38,6 +39,7 @@ export default {
     navbar,
     tabcontrol,
     goodslist,
+    scroll,
 
     homeswiper,
     homebanner,
@@ -52,7 +54,7 @@ export default {
         new: { page: 1, list: [] },
         sell: { page: 1, list: [] }
       },
-      nowGood:"pop"
+      nowGood: "pop"
     };
   },
   created() {
@@ -65,18 +67,18 @@ export default {
   methods: {
     //事件监听
     tabClick(index) {
-      switch(index){
+      switch (index) {
         case 0:
-          this.nowGood = "pop"
-          break
+          this.nowGood = "pop";
+          break;
         case 1:
-          this.nowGood = "new"
-          break
+          this.nowGood = "new";
+          break;
         case 2:
-          this.nowGood = "sell"
-          break
+          this.nowGood = "sell";
+          break;
       }
-      console.log(index)
+      // console.log(index)
     },
 
     //网络请求
@@ -100,7 +102,16 @@ export default {
 
 <style scoped>
 #home {
-  padding-top: 44px;
+  position: relative;
+  width: 100%;
+}
+
+.content {
+  width: 100%;
+  position: absolute;
+  top: 44px;
+  bottom: 49px;
+  /* overflow: hidden; */
 }
 .home-bc {
   /* width: 100%; */
@@ -115,6 +126,6 @@ export default {
 
 .tab-style {
   position: sticky;
-  top: 40px;
+  top: 44px;
 }
 </style>
