@@ -4,7 +4,14 @@
       <div slot="center">购物街</div>
     </navbar>
 
-    <scroll class="content" ref="backcontent">
+    <scroll
+      class="content"
+      ref="backcontent"
+      :probe-type="3"
+      @scroll="getPosition"
+      :pull-up-load="true"
+      @pullingUp="loadMore"
+    >
       <homeswiper :banners="banners"></homeswiper>
 
       <homebanner :recommends="recommends"></homebanner>
@@ -16,7 +23,7 @@
       <goodslist :goods="goods[nowGood].list"></goodslist>
     </scroll>
 
-    <backtop @click.native="backClick"></backtop>
+    <backtop @click.native="backClick" v-show="show"></backtop>
   </div>
 </template>
 
@@ -58,7 +65,8 @@ export default {
         new: { page: 1, list: [] },
         sell: { page: 1, list: [] }
       },
-      nowGood: "pop"
+      nowGood: "pop",
+      show: false
     };
   },
   created() {
@@ -84,8 +92,16 @@ export default {
       }
       // console.log(index)
     },
-    backClick(){
-      this.$refs.backcontent.scrollTo(0, 0, 500)
+    backClick() {
+      this.$refs.backcontent.scrollTo(0, 0, 500);
+    },
+    getPosition(position) {
+      this.show = position.y < -1000;
+    },
+    loadMore() {
+      this.getHomeTabdata(this.nowGood);
+      this.$refs.backcontent.scroll.refresh();
+      // console.log("fjkchedlriuielekfjd");
     },
 
     //网络请求
@@ -101,6 +117,8 @@ export default {
       getHomeTabdata(type, page).then(res => {
         this.goods[type].list.push(...res.data.list);
         // console.log(res.data.list)
+
+        this.$refs.backcontent.finishPullUp();
       });
     }
   }
@@ -109,16 +127,22 @@ export default {
 
 <style scoped>
 #home {
-  position: relative;
-  width: 100%;
+  /* position: relative;
+  width: 100%; */
+  height: 1vh;
+  padding-top: 44px;
 }
 
 .content {
-  width: 100%;
+  /* width: 100%;
   position: absolute;
   top: 44px;
-  bottom: 49px;
-  /* overflow: hidden; */
+  bottom: 49px; */
+  /* height: calc(100% - 93px); */
+  height: 480px;
+  padding-top: 44px;
+  padding-bottom: 49px;
+  overflow: hidden;
 }
 .home-bc {
   /* width: 100%; */
