@@ -1,5 +1,5 @@
 <template>
-  <div class="gooditem">
+  <div class="gooditem" @click="detail">
     <img :src="gooditem.show.img" @load="imgload"/>
     <div>
       <p>{{gooditem.title}}</p>
@@ -20,11 +20,22 @@ export default {
       }
     }
   },
+  data(){
+    return{
+      id:null
+    }
+  },
   methods: {
     imgload(){
       //$bus事件总线
       this.$bus.$emit("imgload")
       
+    },
+    detail(){
+      this.id = this.gooditem.iid
+      // console.log(this.id);
+      
+      this.$router.push("/detail/"+this.id)
     }
   },
 };

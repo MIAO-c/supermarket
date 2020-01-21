@@ -25,7 +25,7 @@ export default {
   display: flex;
   height: 44px;
   line-height: 44px;
-  /* box-shadow: 0 1px 2px rgb(236, 236, 236); */
+  box-shadow: 0 1px 2px rgb(236, 236, 236);
   /* background: #ff5777;
     color: aliceblue; */
 
