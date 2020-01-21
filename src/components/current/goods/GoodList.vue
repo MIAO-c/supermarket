@@ -17,25 +17,22 @@ export default {
       }
     }
   },
-  data(){
-      return{
-
-      }
+  data() {
+    return {};
   },
   components: {
     goodlistitem
-  },
-
-}
+  }
+};
 </script>
 
 <style scoped>
-.GoodList{
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    padding: 10px;
-    justify-content: space-around;
-    box-sizing: border-box;
+.GoodList {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+  justify-content: space-around;
+  box-sizing: border-box;
 }
 </style>

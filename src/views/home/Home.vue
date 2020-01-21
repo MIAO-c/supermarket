@@ -3,6 +3,13 @@
     <navbar class="home-bc">
       <div slot="center">购物街</div>
     </navbar>
+    <tabcontrol
+      :titles="['流行', '新款', '精选']"
+      @tabClick="tabClick"
+      :class="{'tab-style':true,'fixed':tabcontrolfixed}"
+      v-show="tabcontrolfixed"
+      ref="tabcontrol1"
+    ></tabcontrol>
 
     <scroll
       class="content"
@@ -12,13 +19,19 @@
       :pull-up-load="true"
       @pullingUp="loadMore"
     >
-      <homeswiper :banners="banners"></homeswiper>
+      <!-- //@pullingUp="loadMore" -->
+      <homeswiper :banners="banners" @swiperimgload="swiperimgload"></homeswiper>
 
       <homebanner :recommends="recommends"></homebanner>
 
       <homefeature></homefeature>
 
-      <tabcontrol :titles="['流行', '新款', '精选']" @tabClick="tabClick" class="tab-style"></tabcontrol>
+      <tabcontrol
+        :titles="['流行', '新款', '精选']"
+        @tabClick="tabClick"
+        class="tab-style"
+        ref="tabcontrol2"
+      ></tabcontrol>
 
       <goodslist :goods="goods[nowGood].list"></goodslist>
     </scroll>
@@ -37,6 +50,8 @@ import scroll from "@/components/common/scroll/Scroll";
 import backtop from "@/components/common/backTop/BackTop";
 
 import { getHomeMultidata, getHomeTabdata } from "@/network/home";
+
+import { debounce } from "@/components/common/utils/utils";
 
 import homeswiper from "./homeComps/HomeSwiper";
 import homebanner from "./homeComps/HomeBanner";
@@ -61,12 +76,15 @@ export default {
       banners: [],
       recommends: [],
       goods: {
-        pop: { page: 1, list: [] },
-        new: { page: 1, list: [] },
-        sell: { page: 1, list: [] }
+        pop: { page: 0, list: [] },
+        new: { page: 0, list: [] },
+        sell: { page: 0, list: [] }
       },
       nowGood: "pop",
-      show: false
+      show: false,
+      settop: 0,
+      tabcontrolfixed: false,
+      scrolly: 0
     };
   },
   created() {
@@ -75,6 +93,21 @@ export default {
     this.getHomeTabdata("pop");
     this.getHomeTabdata("new");
     this.getHomeTabdata("sell");
+  },
+  mounted() {
+    const refresh = debounce(this.$refs.backcontent.refresh, 50);
+    this.$bus.$on("imgload", () => {
+      refresh();
+    });
+  },
+  activated(){
+    this.$refs.backcontent.scrollTo(0, this.scrolly, 0)
+    this.$refs.backcontent.refresh()
+  },
+  deactivated(){
+    this.scrolly = this.$refs.backcontent.scroll.y
+    // console.log(this.scrolly);
+    
   },
   methods: {
     //事件监听
@@ -90,18 +123,25 @@ export default {
           this.nowGood = "sell";
           break;
       }
-      // console.log(index)
+      this.$refs.tabcontrol1.clickIndex = index;
+      this.$refs.tabcontrol2.clickIndex = index;
+      // console.log(this.$refs.tabcontrol1.clickIndex)
     },
     backClick() {
       this.$refs.backcontent.scrollTo(0, 0, 500);
     },
     getPosition(position) {
-      this.show = position.y < -1000;
+      this.show = position.y < -800;
+      this.tabcontrolfixed = position.y < -this.settop;
     },
     loadMore() {
       this.getHomeTabdata(this.nowGood);
-      this.$refs.backcontent.scroll.refresh();
+      // this.$refs.backcontent.scroll.refresh();
       // console.log("fjkchedlriuielekfjd");
+      this.$refs.backcontent.finishPullUp();
+    },
+    swiperimgload() {
+      this.settop = this.$refs.tabcontrol2.$el.offsetTop;
     },
 
     //网络请求
@@ -117,8 +157,6 @@ export default {
       getHomeTabdata(type, page).then(res => {
         this.goods[type].list.push(...res.data.list);
         // console.log(res.data.list)
-
-        this.$refs.backcontent.finishPullUp();
       });
     }
   }
@@ -130,7 +168,7 @@ export default {
   /* position: relative;
   width: 100%; */
   height: 1vh;
-  padding-top: 44px;
+  /* padding-top: 44px; */
 }
 
 .content {
@@ -140,7 +178,7 @@ export default {
   bottom: 49px; */
   /* height: calc(100% - 93px); */
   height: 480px;
-  padding-top: 44px;
+  /* padding-top: 44px; */
   padding-bottom: 49px;
   overflow: hidden;
 }
@@ -149,14 +187,21 @@ export default {
   background-color: #ff8198;
   color: #fff;
   /* font-size: 14px; */
-  position: fixed;
+  /* position: fixed;
   top: 0;
   left: 0;
-  z-index: 9;
+  z-index: 9; */
 }
 
 .tab-style {
   position: sticky;
   top: 44px;
+}
+
+.fixed {
+  position: fixed;
+  top: 43px;
+  left: 0;
+  z-index: 9;
 }
 </style>
