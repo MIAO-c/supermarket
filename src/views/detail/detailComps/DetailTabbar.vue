@@ -1,6 +1,6 @@
 <template>
   <navbar>
-      <div slot="left" class="left">
+      <div slot="left" class="left" @click="goback">
           <img src="../../../assets/img/common/back.svg" alt="">
       </div>
       <div slot="center" class="center">
@@ -23,8 +23,10 @@ export default {
   methods: {
       nowclick(index){
           this.clickIndex = index
-        //   console.log(this.clickIndex);
-          
+        //   console.log(this.clickIndex);   
+      },
+      goback(){
+          this.$router.go(-1)
       }
   },
   components:{
