@@ -11,7 +11,7 @@
 import tabbar from "@/views/detail/detailComps/DetailTabbar";
 import swiper from "@/views/detail/detailComps/DetailSwiper";
 import detailbase from "@/views/detail/detailComps/DetailBase";
-import detailshop from "@/views/detail/detailComps/DetailShop";
+import detailshop from "@/views/detail/detailComps/DetailShopInfo";
 
 import { getDetailData, goodDetail, shopDetail } from "@/network/detail";
 import { log } from "util";

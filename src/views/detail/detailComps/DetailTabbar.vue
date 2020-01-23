@@ -40,6 +40,7 @@ export default {
 img{
     width: 20px;
     margin-top: 12px;
+    margin-left: 12px;
 }
 .center{
     display: flex;
