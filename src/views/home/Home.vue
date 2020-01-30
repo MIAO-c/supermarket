@@ -96,7 +96,7 @@ export default {
   },
   mounted() {
     const refresh = debounce(this.$refs.backcontent.refresh, 50);
-    this.$bus.$on("imgload", () => {
+    this.$bus.$on("homeimgload", () => {
       refresh();
     });
   },
@@ -167,7 +167,7 @@ export default {
 #home {
   /* position: relative;
   width: 100%; */
-  height: 1vh;
+  height: 100vh;
   /* padding-top: 44px; */
 }
 
@@ -176,8 +176,8 @@ export default {
   position: absolute;
   top: 44px;
   bottom: 49px; */
-  /* height: calc(100% - 93px); */
-  height: 480px;
+  height: calc(100% - 93px);
+  /* height: 480px; */
   /* padding-top: 44px; */
   padding-bottom: 49px;
   overflow: hidden;

@@ -4,29 +4,27 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
-     -->
-     <keep-alive exclude="Detail"><router-view/></keep-alive>
-     
+    -->
+    <keep-alive exclude="Detail">
+      <router-view />
+    </keep-alive>
+
     <tabbarMain></tabbarMain>
   </div>
 </template>
 
 <script>
-
 // import tabbar from "@/components/common/tabbar/Tabbar"
-import tabbarMain from "@/components/current/tabbar/TabbarMain"
+import tabbarMain from "@/components/current/tabbar/TabbarMain";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
     tabbarMain
   }
-}
+};
 </script>
 
 <style>
-
 @import "./assets/css/normalize.css";
-
-
 </style>

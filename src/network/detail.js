@@ -9,6 +9,12 @@ export function getDetailData(iid) {
   });
 }
 
+export function getRecommendData() {
+  return request({
+    url: "/recommend"
+  });
+}
+
 export class goodDetail {
   constructor(itemInfo, columns, services) {
     this.title = itemInfo.title;
@@ -30,5 +36,16 @@ export class shopDetail {
     this.sells = shopInfo.cSells;
     this.score = shopInfo.score;
     this.goodcount = shopInfo.cGoods;
+  }
+}
+
+
+// 尺寸数据
+export class GoodsParams {
+  constructor(info, rule) {
+    // 注: images可能没有值(某些商品有值, 某些没有值)
+    this.image = info.images ? info.images[0] : "";
+    this.infos = info.set;
+    this.sizes = rule.tables;
   }
 }
