@@ -4,7 +4,10 @@
           <img src="../../../assets/img/common/back.svg" alt="">
       </div>
       <div slot="center" class="center">
-          <span v-for="(item,index) in lists" :key="item.item" @click="nowclick(index)" :class="{active:index==clickIndex}">{{item}}</span>
+          <span v-for="(item,index) in lists" 
+                :key="item.item" 
+                @click="nowclick(index)" 
+                :class="{active:index==clickIndex}">{{item}}</span>
       </div>
   </navbar>
 </template>
@@ -23,7 +26,9 @@ export default {
   methods: {
       nowclick(index){
           this.clickIndex = index
-        //   console.log(this.clickIndex);   
+        //   console.log(this.clickIndex);
+            this.$emit("titleclick",this.clickIndex)
+
       },
       goback(){
           this.$router.go(-1)

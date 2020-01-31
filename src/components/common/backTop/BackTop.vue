@@ -16,6 +16,7 @@ export default {
         position: fixed;
         bottom: 50px;
         right: 5px;
+        z-index: 9;
     }
     img{
         width: 45px;

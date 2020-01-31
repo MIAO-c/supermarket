@@ -1,57 +1,38 @@
 <template>
   <div class="bottom-bar">
-    <van-goods-action>
-      <van-goods-action-icon icon="chat-o" text="客服" />
-      <van-goods-action-icon :info="cartLength" @click="$router.push('/cart')" icon="cart-o" text="购物车" />
-      <van-goods-action-icon
-        :color="isShouCang ? '#ff5000' : '#000000'"
-        :icon="isShouCang ? 'star' : 'star-o'"
-        :text="isShouCang ? '已收藏' : '收藏'"
-        @click="starClick"
-      />
-      <van-goods-action-button @click="addToCart" text="加入购物车" type="warning" />
-      <van-goods-action-button @click="$router.push('/cart')" text="立即购买" type="danger" />
-    </van-goods-action>
+    <div class="left">
+      <span class="text">客服</span>
+
+      <span class="text">店铺</span>
+
+      <span class="text">收藏</span>
+    </div>
+    <div class="right">
+      <div class="cart">加入购物车</div>
+      <div class="buy">购买</div>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+// import { mapGetters } from "vuex";
 
 export default {
   name: "DetailBottomBar",
   data() {
-    return {
-      isShouCang: false
-    };
+    return {};
   },
   computed: {
     // 对象写法可以自己命名
-    ...mapGetters({
-      cartLength: "cartListLength"
-    })
   },
   created() {
     // 每次刷新页面获取本地存储购物车数据
-    let list = JSON.parse(localStorage.getItem("cartList")) || [];
-    if (list) {
-      this.$store.commit("setCartList", list);
-    }
+    // let list = JSON.parse(localStorage.getItem("cartList")) || [];
+    // if (list) {
+    //   this.$store.commit("setCartList", list);
+    // }
   },
-  methods: {
-    addToCart() {
-      this.$emit("addToCart");
-    },
-    starClick() {
-      if (!this.isShouCang) {
-        this.$toast("收藏成功");
-        this.isShouCang = true;
-      } else {
-        this.$toast("已取消收藏");
-        this.isShouCang = false;
-      }
-    }
-  }
+  methods: {}
 };
 </script>
 
@@ -64,15 +45,24 @@ export default {
   left: 0;
   width: 100%;
   height: 50px;
+  background: rgb(255, 255, 255);
+  box-shadow: 0 -1px 3px rgb(214, 214, 214);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-
-/deep/ .van-goods-action {
-  line-height: 50px;
+.left,.right{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex: 1;
+}
+.cart,.buy{
   height: 50px;
-  border-top: 1px solid #cccccc;
-}
+  padding: 0 5px;
 
-/deep/ .van-goods-action-icon {
-  height: auto;
+}
+.cart{
+  background: rgb(253, 55, 115);
 }
 </style>

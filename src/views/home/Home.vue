@@ -141,7 +141,10 @@ export default {
       this.$refs.backcontent.finishPullUp();
     },
     swiperimgload() {
+      //副导航栏到顶部的距离（固定）
       this.settop = this.$refs.tabcontrol2.$el.offsetTop;
+      // console.log(this.settop);
+      
     },
 
     //网络请求
