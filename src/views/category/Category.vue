@@ -1,10 +1,11 @@
 <template>
-  <div class="categroy">12364</div>
+  <div class="categroy">fhdsj</div>
 </template>
 
 <script>
 export default {
-  name: "categroy"
+  name: "categroy",
+  computed: {}
 };
 </script>
 

@@ -8,7 +8,7 @@
       <span class="text">收藏</span>
     </div>
     <div class="right">
-      <div class="cart">加入购物车</div>
+      <div class="cart" @click="cartclick">加入购物车</div>
       <div class="buy">购买</div>
     </div>
   </div>
@@ -27,12 +27,13 @@ export default {
   },
   created() {
     // 每次刷新页面获取本地存储购物车数据
-    // let list = JSON.parse(localStorage.getItem("cartList")) || [];
-    // if (list) {
-    //   this.$store.commit("setCartList", list);
-    // }
+    
   },
-  methods: {}
+  methods: {
+    cartclick(){
+      this.$emit("cartclick")
+    }
+  }
 };
 </script>
 
@@ -51,6 +52,14 @@ export default {
   justify-content: space-between;
   align-items: center;
 }
+.left span{
+   padding: 0 10px;
+}
+.left span:nth-child(2){
+ 
+  border-left: 1px solid rgb(194, 194, 194); 
+  border-right: 1px solid rgb(194, 194, 194); 
+}
 .left,.right{
   display: flex;
   justify-content: space-around;
@@ -58,11 +67,18 @@ export default {
   flex: 1;
 }
 .cart,.buy{
+  flex: 1;
   height: 50px;
-  padding: 0 5px;
-
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .cart{
   background: rgb(253, 55, 115);
+  color: #ffffff;
+}
+.buy{
+  background: #eedb31;
 }
 </style>

@@ -47,11 +47,12 @@ import navbar from "@/components/common/navBar/NavBar";
 import tabcontrol from "@/components/current/tabControl/TabControl";
 import goodslist from "@/components/current/goods/GoodList";
 import scroll from "@/components/common/scroll/Scroll";
-import backtop from "@/components/common/backTop/BackTop";
+// import backtop from "@/components/common/backTop/BackTop";
 
 import { getHomeMultidata, getHomeTabdata } from "@/network/home";
 
 import { debounce } from "@/components/common/utils/utils";
+import { backttop } from "@/components/common/utils/mixin";
 
 import homeswiper from "./homeComps/HomeSwiper";
 import homebanner from "./homeComps/HomeBanner";
@@ -65,7 +66,7 @@ export default {
     tabcontrol,
     goodslist,
     scroll,
-    backtop,
+    // backtop,
 
     homeswiper,
     homebanner,
@@ -81,7 +82,7 @@ export default {
         sell: { page: 0, list: [] }
       },
       nowGood: "pop",
-      show: false,
+      // show: false,
       settop: 0,
       tabcontrolfixed: false,
       scrolly: 0
@@ -94,6 +95,7 @@ export default {
     this.getHomeTabdata("new");
     this.getHomeTabdata("sell");
   },
+  mixins:[backttop],
   mounted() {
     const refresh = debounce(this.$refs.backcontent.refresh, 50);
     this.$bus.$on("homeimgload", () => {
@@ -127,9 +129,9 @@ export default {
       this.$refs.tabcontrol2.clickIndex = index;
       // console.log(this.$refs.tabcontrol1.clickIndex)
     },
-    backClick() {
-      this.$refs.backcontent.scrollTo(0, 0, 500);
-    },
+    // backClick() {
+    //   this.$refs.backcontent.scrollTo(0, 0, 500);
+    // },
     getPosition(position) {
       this.show = position.y < -800;
       this.tabcontrolfixed = position.y < -this.settop;

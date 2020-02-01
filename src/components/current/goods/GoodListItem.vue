@@ -42,7 +42,7 @@ export default {
     },
     detail() {
       this.id = this.gooditem.iid;
-      console.log(this.id);
+      // console.log(this.id);
 
       this.$router.push({
         path: "/detail",

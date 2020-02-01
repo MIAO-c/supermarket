@@ -1,9 +1,9 @@
 <template>
   <div class="detail">
     <tabbar @titleclick="titleclick" ref="tabbarr"></tabbar>
-    <backtop @click.native="backClick"></backtop>
-    
-    <scroll class="content" ref="scrollcontent" :probe-type="3" @scroll="getdetailPosition">
+    <backtop @click.native="backClick" v-show="show"></backtop>
+
+    <scroll class="content" ref="backcontent" :probe-type="3" @scroll="getdetailPosition">
       <swiper :imgs="topimg"></swiper>
       <detailbase :gooddetail="goodDetail" ref="one"></detailbase>
 
@@ -16,8 +16,10 @@
       <detailcomment :comment-info="commentInfo" ref="three"></detailcomment>
       <goodslist :goods="recommendData" ref="four"></goodslist>
     </scroll>
+
+    <btabbar @cartclick="addcart"></btabbar>
+
     
-    <btabbar></btabbar>
   </div>
 </template>
 
@@ -33,8 +35,11 @@ import btabbar from "@/views/detail/detailComps/DetailBottomBar";
 
 import goodslist from "@/components/current/goods/GoodList";
 
+import { backttop } from "@/components/common/utils/mixin";
+
 import scroll from "@/components/common/scroll/Scroll";
-import backtop from "@/components/common/backTop/BackTop";
+
+// import {store} from "@/store/index"
 
 import {
   getDetailData,
@@ -43,6 +48,7 @@ import {
   shopDetail,
   GoodsParams
 } from "@/network/detail";
+
 import { debounce } from "@/components/common/utils/utils";
 
 import { log } from "util";
@@ -60,9 +66,10 @@ export default {
     detailparam,
     btabbar,
 
-    goodslist,
-    backtop
+    goodslist
   },
+  mixins: [backttop],
+
   data() {
     return {
       iid: 1,
@@ -79,24 +86,31 @@ export default {
     };
   },
   methods: {
-    getdetailPosition(position) { //getdetailPosition是scroll vue文件中一触发滚动事件就发射scroll事件和传值position
+    getdetailPosition(position) {
+      //getdetailPosition是scroll vue文件中一触发滚动事件就发射scroll事件和传值position
       // console.log(position.y);
       for (let i = 0; i < this.themetypes.length; i++) {
-        if (this.$refs.tabbarr.clickIndex != i &&  //当前index与之前相符则不继续执行，防止每滚动一点就执行函数
-        (i < this.themetypes.length-1 && -position.y >= this.themetypes[i] && -position.y < this.themetypes[i + 1] 
-            || i == this.themetypes.length-1 && -position.y >= this.themetypes[i])) {
-            this.$refs.tabbarr.clickIndex = i
-            console.log(i);
-            
+        if (
+          this.$refs.tabbarr.clickIndex != i && //当前index与之前相符则不继续执行，防止每滚动一点就执行函数
+          ((i < this.themetypes.length - 1 &&
+            -position.y >= this.themetypes[i] &&
+            -position.y < this.themetypes[i + 1]) ||
+            (i == this.themetypes.length - 1 &&
+              -position.y >= this.themetypes[i]))
+        ) {
+          this.$refs.tabbarr.clickIndex = i;
+          // console.log(i);
         }
       }
+
+      this.show = position.y < -800;
     },
 
     titleclick(index) {
-      this.$refs.scrollcontent.scrollTo(0, -this.themetypes[index], 500);
+      this.$refs.backcontent.scrollTo(0, -this.themetypes[index], 500);
     },
     imgload() {
-      this.$refs.scrollcontent.refresh();
+      this.$refs.backcontent.refresh();
 
       // 等图片加载完成，获取个区域位置
       this.themetypes.push(0);
@@ -106,11 +120,25 @@ export default {
       // console.log(this.themetypes);
     },
     backClick() {
-      this.$refs.scrollcontent.scrollTo(0, 0, 500);
+      this.$refs.backcontent.scrollTo(0, 0, 500);
+    },
+
+    addcart() {
+      const product = {};
+      product.img = this.topimg[0];
+      product.title = this.goodDetail.title;
+      product.desc = this.goodDetail.desc;
+      product.newPrice = this.goodDetail.realPrice;
+      product.iid = this.iid;
+      product.count = 1;
+      
+      this.$store.dispatch("addcart",product)
+      console.log(this.$store.state.cartlist);
+      
     }
   },
   mounted() {
-    const refresh = debounce(this.$refs.scrollcontent.refresh, 50);
+    const refresh = debounce(this.$refs.backcontent.refresh, 50);
     this.$bus.$on("detailimgload", () => {
       refresh();
     });
@@ -157,7 +185,8 @@ export default {
 }
 
 .content {
-  height: calc(100% - 44px);
+  margin-bottom: 50px;
+  height: calc(100% - 94px);
   position: relative;
   overflow: hidden;
   z-index: 2;
