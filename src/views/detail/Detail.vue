@@ -133,7 +133,7 @@ export default {
       product.count = 1;
       
       this.$store.dispatch("addcart",product)
-      console.log(this.$store.state.cartlist);
+      // console.log(this.$store.state.cartlist);
       
     }
   },
