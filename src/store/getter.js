@@ -19,5 +19,11 @@ export const getters = {
       .reduce((val,item) => {
         return val + item.count;
       }, 0);
-  }
+  },
+//   checkall(state) {
+//     if (state.cartlist.length == 0) {
+//       return false;
+//     }
+//     return !(state.cartlist.filter(item => !item.checked).length);
+//   }
 };

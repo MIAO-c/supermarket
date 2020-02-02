@@ -17,8 +17,8 @@ export default {
 
 <style scoped>
 .checkbox {
-  width: 15px;
-  height: 15px;
+  width: 100%;
+  height: 100%;
   background: #ff8198;
 }
 .box {

@@ -1,7 +1,7 @@
 <template>
   <div class="toltalbox">
     <div>
-      <yes></yes>
+      <yes :class="{checkbox:checkall}" @click.native="ifcheckall"></yes>
       <span class="sel">全选</span>
     </div>
     <div>
@@ -9,8 +9,8 @@
       <span class="money">￥{{tolsum}}</span>
     </div>
     <div class="mon">
-        <span class="sum">去结算</span>
-        <span class="coun">{{tolcount}}</span>
+      <span class="sum">去结算</span>
+      <span class="coun">{{tolcount}}</span>
     </div>
   </div>
 </template>
@@ -24,13 +24,49 @@ export default {
   components: {
     yes
   },
+  data(){
+      return{
+        //   ifcheck: false
+      }
+  },
+  methods: {
+      ifcheckall(){
+        //   this.ifcheck = !this.ifcheck;
+        //   for(let item of this.cartcontent){
+        //       item.checked = this.ifcheck
+        //   }
+        //   console.log(this.ifcheck);
+
+        if(this.checkall){
+            this.cartcontent.forEach(item => {
+                item.checked = false
+            });
+        }else{
+           this.cartcontent.forEach(item => {
+                item.checked = true;
+            }); 
+        }
+          
+      }
+  },
   computed: {
-    ...mapGetters(["tolcount","tolsum"])
+    ...mapGetters(["tolcount", "tolsum", "cartcontent"]),
+    checkall() {
+      if (this.cartcontent.length === 0) {
+        return false;
+      }
+      return !(this.cartcontent.filter(item => !item.checked).length);
+    }
   }
 };
 </script>
 
 <style scoped>
+.checkbox {
+  width: 15px;
+  height: 15px;
+  background: #ff8198;
+}
 .toltalbox {
   position: fixed;
   bottom: 50px;
@@ -41,7 +77,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 0 0 10px ;
+  padding: 0 0 0 10px;
   box-sizing: border-box;
 }
 .toltalbox div:nth-child(1) {
@@ -51,17 +87,17 @@ export default {
 .sum {
   margin: 0 10px;
 }
-.money{
-    font-size: 18px;
-    font-weight: bold;
-    color: rgb(255, 92, 51)
+.money {
+  font-size: 18px;
+  font-weight: bold;
+  color: rgb(255, 92, 51);
 }
-.mon{
-    height: 40px;
-    background: rgb(255, 120, 86);
-    color: white;
-    line-height: 40px;
-    padding-right: 10px;
-    box-sizing: border-box;
+.mon {
+  height: 40px;
+  background: rgb(255, 120, 86);
+  color: white;
+  line-height: 40px;
+  padding-right: 10px;
+  box-sizing: border-box;
 }
 </style>
