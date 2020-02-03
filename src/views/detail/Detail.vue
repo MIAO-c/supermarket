@@ -19,7 +19,7 @@
 
     <btabbar @cartclick="addcart"></btabbar>
 
-    
+    <toast></toast>
   </div>
 </template>
 
@@ -38,6 +38,7 @@ import goodslist from "@/components/current/goods/GoodList";
 import { backttop } from "@/components/common/utils/mixin";
 
 import scroll from "@/components/common/scroll/Scroll";
+import toast from "@/components/common/toast/Toast";
 
 // import {store} from "@/store/index"
 
@@ -66,7 +67,8 @@ export default {
     detailparam,
     btabbar,
 
-    goodslist
+    goodslist,
+    toast
   },
   mixins: [backttop],
 
@@ -131,10 +133,11 @@ export default {
       product.newPrice = this.goodDetail.realPrice;
       product.iid = this.iid;
       product.count = 1;
-      
-      this.$store.dispatch("addcart",product)
+
+      this.$store.dispatch("addcart", product).then(res => {
+        this.$toast.isshow(res,2000)
+      });
       // console.log(this.$store.state.cartlist);
-      
     }
   },
   mounted() {

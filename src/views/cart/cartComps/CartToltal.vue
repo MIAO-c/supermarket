@@ -8,7 +8,7 @@
       <span class="sum">合计</span>
       <span class="money">￥{{tolsum}}</span>
     </div>
-    <div class="mon">
+    <div class="mon" @click="ifsum">
       <span class="sum">去结算</span>
       <span class="coun">{{tolcount}}</span>
     </div>
@@ -47,6 +47,12 @@ export default {
             }); 
         }
           
+      },
+      ifsum(){
+          
+          if(!this.tolcount){
+              this.$toast.isshow("没有选中商品")
+          }
       }
   },
   computed: {

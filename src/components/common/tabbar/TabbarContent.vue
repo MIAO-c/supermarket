@@ -29,7 +29,10 @@ export default {
   },
   methods: {
     tentClick() {
-      this.$router.replace(this.path);
+      if(this.$route.path.indexOf(this.path) == -1){
+        this.$router.replace(this.path);
+      }
+      
     }
   }
 };
